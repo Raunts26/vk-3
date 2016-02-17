@@ -86,7 +86,8 @@ main > *:target ~ * {
     float: right;
 }
 .title,
-.ingredients {
+.ingredients,
+.date {
     width: 100%;
     margin-bottom: 10px;
     margin-top: 4px;

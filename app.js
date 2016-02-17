@@ -88,9 +88,24 @@
         //Lisa uus purk
         var title = document.querySelector('.title').value;
         var ingredients = document.querySelector('.ingredients').value;
-        console.log(title + ' ' + ingredients);
-        var new_jar = new Jar(title, ingredients);
-        document.querySelector("#list-view").innerHTML += new_jar.createHtmlElement();
+        var date = document.querySelector('.date').value;
+        if(title === "" || ingredients === "" || date === "") {
+          this.showAnswer(false);
+        } else {
+          this.showAnswer(true);
+          console.log(title + ' ' + ingredients + ' ' + date);
+          var new_jar = new Jar(title, ingredients, date);
+          var li = new_jar.createHtmlElement();
+          document.querySelector('.list-of-jars').appendChild(li);
+        }
+
+      },
+      showAnswer: function(bool) {
+        if(bool === true) {
+          document.querySelector('.answer').innerHTML = "<strong><p style='color: green;'>Salvestatud!</p></strong>";
+        } else {
+          document.querySelector('.answer').innerHTML = "<strong><p style='color: red;'>Palun täida kõik lahtrid!</p></strong>";
+        }
       },
       routeChange: function(event) {
         this.currentRoute = window.location.hash.slice(1);
@@ -123,15 +138,42 @@
 
     };
 
-    var Jar = function(title, ingredients) {
+    var Jar = function(title, ingredients, date) {
       this.title = title;
       this.ingredients = ingredients;
+      this.date = date;
     };
 
     Jar.prototype = {
       createHtmlElement: function() {
         // Anda tagasi ilus html
-        return this.title + "<br>";
+        // li
+        //  span.letter
+        //    M
+        //  span.content
+        //    title | ingredients
+
+        var li = document.createElement('li');
+
+        var span = document.createElement('span');
+        span.className = 'letter';
+
+        var letter = document.createTextNode(this.title.charAt(0));
+        span.appendChild(letter);
+
+        li.appendChild(span);
+
+        var content_span = document.createElement('span');
+        content_span.className = 'content';
+
+        var content = document.createTextNode(this.title + ' | ' + this.ingredients + ' | ' + this.date);
+        content_span.appendChild(content);
+
+        li.appendChild(content_span);
+
+        console.log(li);
+
+        return li;
       }
     };
 
